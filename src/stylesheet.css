@@ -54,6 +54,20 @@ body {
     width : 10%;
 }
 
+#page1 {
+    position : fixed;
+}
+
+#page2 {
+    position : fixed;
+}
+
+#page3 {
+    position : fixed;
+}
+
 #page4 {
-    background-image: url("http://i.imgur.com/wvbAhwy.jpg");
+    position : fixed; 
+    left : 50%;
+    top : 50%;
 }
