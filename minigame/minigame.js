@@ -2,7 +2,7 @@ var animate = window.requestAnimationFrame || window.webkitRequestAnimationFrame
         window.setTimeout(callback, 1000 / 60)
     };
 var canvas = document.createElement("canvas");
-var width = 800;
+var width = 1000;
 var height = 600;
 canvas.width = width;
 canvas.height = height;
@@ -34,6 +34,7 @@ function prepare(){
     var c = Math.floor(options.length/2)+1;
     var colors = randomColor({
         count: options.length,
+        //luminosity: 'dark',
         hue: 'blue'
     });
     for (var i = 0; i<options.length; i++ ) {
@@ -52,10 +53,6 @@ function init(){
     addOption("Pizza");
     addOption("Chineese");
     addOption("More pizza");
-    addOption("Death");
-    addOption("Fast food");
-    addOption("Kebab");
-    addOption("Even more pizza");
     addOption("Death");
     addOption("Fast food");
     addOption("Kebab");
@@ -103,6 +100,7 @@ function Button(x,y,width,height,name,color){
         context.fillStyle = "#0000FF";
         context.fill();*/
         context.fillStyle = this.getColor();
+        context.globalAlpha = 1;
         context.fillRect(x, y, width, height);
         
         //Draw effect
@@ -114,6 +112,13 @@ function Button(x,y,width,height,name,color){
             if(this.effectSize>1) this.effectSize=1;
             context.globalAlpha = 1;
         }
+        
+        //Draw text
+        context.font= "bold 22px Arial";
+        context.fillStyle = "#FFFFFF";
+        context.globalAlpha = 0.8;
+        var textWidth = context.measureText(name).width;
+        context.fillText(name,x+(this.width-textWidth)/2,y+height/2,width);
     }
     this.getColor = function(){
         if(this.color==undefined){
