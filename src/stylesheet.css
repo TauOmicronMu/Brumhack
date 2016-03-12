@@ -1,8 +1,8 @@
 body { 
     background-image: url("http://i.imgur.com/wvbAhwy.jpg");
-    background-repeat: no-repeat;
     background-size: cover;
-    position : absolute;
+    overflow : hidden;
+    position : relative;
     left : 0px;
     right : 0px;
     margin : 0px;
