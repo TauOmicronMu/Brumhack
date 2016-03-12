@@ -1,5 +1,6 @@
 var wheel = new Winwheel({
         'numSegments' : 4,
+        'pointerAngle' : 0, 
         'segments'    :
             [
                 {'fillStyle' : '#eae56f', 'text' : 'Tom'},
@@ -13,6 +14,17 @@ var wheel = new Winwheel({
                 'duration' : 5,
                 'spins' : 8
             }
+        /*
+        This will draw a red line at 'pointerAngle' degrees and show you 
+        where the wheel thinks that many degrees is.
+  
+        'pointerGuide' : 
+            {
+                'display' : true,
+                'strokeStyle' : 'red',
+                'lineWidth' : 3
+            }
+        */
 });
 
 wheel.startAnimation();
