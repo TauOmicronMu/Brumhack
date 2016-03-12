@@ -21,18 +21,43 @@ var button4 = new Button(canvas.width/2, canvas.height/2, canvas.width/2, canvas
 var INITIAL_SCORE = 100;
 var options = new Array();
 var scores = new Array();
+var colors = new Array();
 var buttons = new Array();
+var bar = new ProgressBar(0,height/2-25,1000,50);
 
+var started = false;
 
 //For interacting
+
+//Gets clicks from last call of this function
+function getNewClicks(){
+    var res = new Array(scores.length);
+    for(var i=0; i<buttons.length; i++){
+        res[i] = buttons[i].clicks;
+        buttons[i].clicks=0;
+    }
+    return res;
+}
+
+function addNewClicks(clicks){
+    for(var i=0;i<clicks.length;i++){
+        scores[i]+=clicks[i];
+    }
+}
+
+function start(){
+    start=true;
+}
+
+
 function addOption(name){
     options.push(name);
     scores.push(INITIAL_SCORE);
 }
 
 function prepare(){
-    var c = Math.floor(options.length/2)+1;
-    var colors = randomColor({
+    var c = Math.floor(options.length/2);
+    colors = randomColor({
         count: options.length,
         //luminosity: 'dark',
         hue: 'blue'
@@ -69,6 +94,7 @@ var render = function(){
     for (var i = 0; i<buttons.length; i++ ) {
            buttons[i].render();
     }
+    bar.render();
 };
 
 var update = function(){
@@ -143,13 +169,59 @@ function Button(x,y,width,height,name,color){
     this.newClick = function(){
         this.clicks++;
         $("#log1").text(this.clicks);
-        $("#log3").text(name+" pressed")
+        $("#log3").text(this.name+" pressed")
         this.effectSize+=0.20;
+        incremementScore(this.name);
     }
     
 }
 
-//function innerButton = function()
+var incremementScore = function(name){
+    for (var i = 0; i<scores.length; i++ ) {
+           if(options[i]==name) scores[i]++;
+    }
+}
+
+
+function ProgressBar(x,y,width,height){
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.color = randomColor({hue: 'blue'});
+    
+    this.render = function(){
+        if(started){
+            var total = scores.reduce(function(a,b){return a+b;},0);
+            var pos = this.x;
+            context.globalAlpha = 1;
+            for (var i = 0; i<scores.length; i++) {
+                context.fillStyle = colors[i];
+                var rectWidth = scores[i]*this.width/total;
+                context.fillRect(pos, this.y, rectWidth, this.height);
+                pos+=rectWidth;    
+            }
+        
+        //Draw border
+        context.beginPath();
+        context.lineWidth="3";
+        context.strokeStyle="black";
+        context.rect(x,y,width,height);
+        context.stroke();
+        }else{
+            context.globalAlpha = 1;
+            context.fillStyle = this.color;
+            context.fillRect(this.x,this.y,this.width,this.height);
+            
+            context.font= "bold 22px Arial";
+            context.fillStyle = "#FFFFFF";
+            var text = "Waiting for other people to join...";
+            var textWidth = context.measureText(text).width;
+            context.fillText(text,x+(this.width-textWidth)/2,y+height/2,width);
+        }
+    }
+}
+
 
 
 
@@ -163,6 +235,7 @@ function darken(color){
 
 function onMouseDown(e) {
     $("#log2").text("Registered click");
+    if(!started) return;
     var mouse = getMouse(e, canvas);
     for (var i = 0; i<buttons.length; i++ ) {
            buttons[i].tryClick(mouse);
