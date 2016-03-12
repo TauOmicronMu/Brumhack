@@ -6,6 +6,9 @@ var width = 800;
 var height = 600;
 canvas.width = width;
 canvas.height = height;
+//canvas.addEventListener("click", mouseClickEvent, false); //Touch input
+
+
 var context = canvas.getContext('2d');
 
 var delta = 0;
