@@ -3,6 +3,12 @@
  * number of overall segments.
  */
 
+var segments = 6;
+
+var colours = randomColor({
+	count: segments
+});
+
 var duration = 5;
 
 function alertFinished() {
@@ -10,7 +16,7 @@ function alertFinished() {
 }
 
 var wheel = new Winwheel({
-        'numSegments' : 6,
+        'numSegments' : segments,
         'pointerAngle' : 0, 
         'textFontSize' : 12,
         'textFontFamily' : 'Quicksand',
@@ -19,12 +25,12 @@ var wheel = new Winwheel({
         'strokeStyle' : 'black', 
         'segments'    :
             [
-                {'fillStyle' : '#eae56f', 'text' : 'Tom'},
-                {'fillStyle' : '#89f26e', 'text' : 'Mac'},
-                {'fillStyle' : '#7de6ef', 'text' : 'Matt'},
-                {'fillStyle' : '#e7706f', 'text' : 'Liam'},
-                {'fillStyle' : '#000000', 'text' : 'Aiste'},
-                {'fillStyle' : '#ff0000', 'text' : 'Bianca'}
+                {'fillStyle' : colours[0], 'text' : 'Tom'},
+                {'fillStyle' : colours[1], 'text' : 'Mac'},
+                {'fillStyle' : colours[2], 'text' : 'Matt'},
+                {'fillStyle' : colours[3], 'text' : 'Liam'},
+                {'fillStyle' : colours[4], 'text' : 'Aiste'},
+                {'fillStyle' : colours[5], 'text' : 'Bianca'}
             ],
         'animation' : 
             {
