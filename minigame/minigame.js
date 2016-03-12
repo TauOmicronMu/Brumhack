@@ -53,6 +53,8 @@ function Button(x,y,width,height,color){
     this.height = height;
     this.color = color;
     this.clicks = 0;
+    this.effectSize = 0;
+    
     this.render = function(){
         //Render a circle
         /*context.beginPath();
@@ -61,6 +63,16 @@ function Button(x,y,width,height,color){
         context.fill();*/
         context.fillStyle = this.getColor();
         context.fillRect(x, y, width, height);
+        
+        //Draw effect
+        if(this.effectSize>0){
+            context.fillStyle = "#000000";
+            context.globalAlpha = 0.5;
+            context.fillRect(this.x+(this.width*(1-this.effectSize))/2, this.y+(this.height*(1-this.effectSize))/2, this.width*this.effectSize, this.height*this.effectSize);
+            this.effectSize*=0.96;
+            if(this.effectSize>1) this.effectSize=1;
+            context.globalAlpha = 1;
+        }
     }
     this.getColor = function(){
         if(this.color==undefined){
@@ -76,18 +88,24 @@ function Button(x,y,width,height,color){
         }
         return this.color;
     }
+    this.getInnerColor = function(){
+        var start = this.getColor();
+        
+        
+    }
     this.tryClick = function(mouse){
         //For circles
         //var distance = Math.sqrt(Math.pow(x-mouse.x,2) + Math.pow(y-mouse.y,2));
         //if(distance<=size/2) this.newClick();
         if(mouse.x<x || mouse.x>x+width || mouse.y<y || mouse.y>y+height) $("#log1").text("Click outside button");
         else this.newClick();
-        
-    }
+        }
     this.newClick = function(){
         this.clicks++;
         $("#log1").text(this.clicks);
+        this.effectSize+=0.20;
     }
+    
 }
 
 //function innerButton = function()
@@ -95,12 +113,17 @@ function Button(x,y,width,height,color){
 
 
 
-
+function darken(color){
+    var r = color.substring(1,2).parseInt;
+    var g = color.substring(3,4).parseInt;
+    var b = color.substring(5,6).parseInt;
+    //var lightness = (r+g+b)/255;
+}
 
 function onMouseDown(e) {
-    $("#log1").text("Registered click");
-  var mouse = getMouse(e, canvas);
-  button.tryClick(mouse);
+    $("#log2").text("Registered click");
+    var mouse = getMouse(e, canvas);
+    button1.tryClick(mouse);
    $("#debug2").text("Mouse click at"+mouse.x);
 }
 
