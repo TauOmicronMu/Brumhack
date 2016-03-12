@@ -1,3 +1,7 @@
+#bodywrapper {
+    
+}
+
 #jumbowrapper {
     <!-- Vertcal align is bullshit. -->
     text-align : center;
@@ -24,16 +28,19 @@
 }
 
 #canvas {
-    height : 80%;
-    width : 80%;
+    height : 100%;
+    width : 100%;
     z-index : 1;
+    max-height : 100%;
+    max-width : 100%;
+    display : inline-block;
 }
 
 #prizePointer {
     position : absolute;
-    left : 45%;
+    left : 44.65%;
     top : -19%;
     z-index : 999;
     height : 25%;
     width : 10%;
-} 
+}
