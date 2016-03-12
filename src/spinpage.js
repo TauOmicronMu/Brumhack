@@ -6,7 +6,8 @@
 var segments = 6;
 
 var colours = randomColor({
-	count: segments
+	count : segments,
+        luminosity : "dark",
 });
 
 var duration = 5;
