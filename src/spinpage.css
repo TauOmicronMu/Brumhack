@@ -1,0 +1,26 @@
+#jumbowrapper {
+    <!-- Vertcal align is bullshit. -->
+    text-align : center;
+    top : 50%;
+    left : 50%;
+    position : absolute;
+    transform : translate(-50%, -50%);
+}
+
+#jumbotron {
+
+    <!-- Make sure its always a circle.-->
+    height : 100vmin;
+    width : 100vmin;
+
+    <!-- Put it in the center -->
+    display : table-cell;
+    vertical-align : middle;
+    text-align : center;
+    margin : 0px auto;
+}
+
+#canvas {
+    height : 80%;
+    width : 80%;
+}
