@@ -18,18 +18,47 @@ var button2 = new Button(0, canvas.height/2, canvas.width/2, canvas.height/2);
 var button3 = new Button(canvas.width/2, 0, canvas.width/2, canvas.height/2);
 var button4 = new Button(canvas.width/2, canvas.height/2, canvas.width/2, canvas.height/2);
 
+var INITIAL_SCORE = 100;
+var options = new Array();
+var scores = new Array();
+var buttons = new Array();
+
+
+//For interacting
+function addOption(name){
+    options.push(name);
+    scores.push(INITIAL_SCORE);
+}
+
+function prepare(){
+    for (var i = 0; i<options.length; i++ ) {
+        if(i%2==0) buttons.push(new Button(width*(i/2),0,width/4,height/2,options[i]));
+        else buttons.push(new Button(width*(i/2),height/2,width/4,height/2,options[i]));
+    }
+}
+
 
 
 function init(){
     canvas.addEventListener("mousedown", onMouseDown, false);
+    
+    //Testing
+    addOption("Curry");
+    addOption("Pizza");
+    addOption("Chineese");
+    addOption("More pizza");
+    prepare();
 }
 
 var render = function(){
-    button1.render();
+    /*button1.render();
 	button2.render();
     button3.render();
-    button4.render();
-
+    button4.render();*/
+    
+    for (var i = 0; i<buttons.length; i++ ) {
+           buttons[i].render();
+    }
 };
 
 var update = function(){
@@ -42,16 +71,14 @@ var step = function(){
     animate(step);
 };
 
-var getScore = function(){
-    return button.clicks;
-};
 
-function Button(x,y,width,height,color){
+function Button(x,y,width,height,name,color){
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
     this.color = color;
+    this.name = name;
     this.clicks = 0;
     this.effectSize = 0;
     
@@ -88,11 +115,6 @@ function Button(x,y,width,height,color){
         }
         return this.color;
     }
-    this.getInnerColor = function(){
-        var start = this.getColor();
-        
-        
-    }
     this.tryClick = function(mouse){
         //For circles
         //var distance = Math.sqrt(Math.pow(x-mouse.x,2) + Math.pow(y-mouse.y,2));
@@ -103,6 +125,7 @@ function Button(x,y,width,height,color){
     this.newClick = function(){
         this.clicks++;
         $("#log1").text(this.clicks);
+        $("#log3").text(name+" pressed")
         this.effectSize+=0.20;
     }
     
@@ -123,7 +146,10 @@ function darken(color){
 function onMouseDown(e) {
     $("#log2").text("Registered click");
     var mouse = getMouse(e, canvas);
-    button1.tryClick(mouse);
+    for (var i = 0; i<buttons.length; i++ ) {
+           buttons[i].tryClick(mouse);
+    }
+    //button1.tryClick(mouse);
    $("#debug2").text("Mouse click at"+mouse.x);
 }
 
