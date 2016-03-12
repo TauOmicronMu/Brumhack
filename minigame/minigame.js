@@ -64,10 +64,15 @@ function Button(x,y,width,height,color){
     }
     this.getColor = function(){
         if(this.color==undefined){
-            var r = Math.round(Math.random()*16*16).toString(16);
-            var g = Math.round(Math.random()*16*16).toString(16);
-            var b = Math.round(Math.random()*16*16).toString(16);
-            this.color = "#"+r+g+b;
+            var r = Math.round(Math.random()*200+56).toString(16);
+            var g = Math.round(Math.random()*200+56).toString(16);
+            var b = Math.round(Math.random()*200+56).toString(16);
+            
+            //this.color = "#"+r+g+b;
+            this.color = randomColor({
+                luminosity: 'light',
+                hue: 'blue'
+            });
         }
         return this.color;
     }
@@ -83,11 +88,9 @@ function Button(x,y,width,height,color){
         this.clicks++;
         $("#log1").text(this.clicks);
     }
-    
-    
-    
 }
 
+//function innerButton = function()
 
 
 
