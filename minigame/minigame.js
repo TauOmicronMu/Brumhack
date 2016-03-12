@@ -13,7 +13,11 @@ var context = canvas.getContext('2d');
 
 var delta = 0;
 var now = Date.now();
-var button = new Button(400,300,100,100);
+var button1 = new Button(0, 0, canvas.width/2, canvas.height/2);
+var button2 = new Button(0, canvas.height/2, canvas.width/2, canvas.height/2);
+var button3 = new Button(canvas.width/2, 0, canvas.width/2, canvas.height/2);
+var button4 = new Button(canvas.width/2, canvas.height/2, canvas.width/2, canvas.height/2);
+
 
 
 function init(){
@@ -21,7 +25,11 @@ function init(){
 }
 
 var render = function(){
-    button.render();
+    button1.render();
+	button2.render();
+    button3.render();
+    button4.render();
+
 };
 
 var update = function(){
