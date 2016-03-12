@@ -19,11 +19,12 @@ function alertFinished() {
 var wheel = new Winwheel({
         'numSegments' : segments,
         'pointerAngle' : 0, 
-        'textFontSize' : 12,
+        'textFontSize' : 36,
         'textFontFamily' : 'Quicksand',
         'textFontWeight' : 'Bold',
         'textFillStyle' : '#ffffff',
-        'strokeStyle' : 'black', 
+        'strokeStyle' : 'white', 
+        'lineWidth' : 8, 
         'segments'    :
             [
                 {'fillStyle' : colours[0], 'text' : 'Tom'},
