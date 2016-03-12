@@ -13,10 +13,10 @@ var context = canvas.getContext('2d');
 
 var delta = 0;
 var now = Date.now();
-var button1 = new Button(0, 0, canvas.width/2, canvas.height/2);
+/*var button1 = new Button(0, 0, canvas.width/2, canvas.height/2);
 var button2 = new Button(0, canvas.height/2, canvas.width/2, canvas.height/2);
 var button3 = new Button(canvas.width/2, 0, canvas.width/2, canvas.height/2);
-var button4 = new Button(canvas.width/2, canvas.height/2, canvas.width/2, canvas.height/2);
+var button4 = new Button(canvas.width/2, canvas.height/2, canvas.width/2, canvas.height/2);*/
 
 var INITIAL_SCORE = 100;
 var options = new Array();
@@ -31,9 +31,14 @@ function addOption(name){
 }
 
 function prepare(){
+    var c = Math.floor(options.length/2)+1;
+    var colors = randomColor({
+        count: options.length,
+        hue: 'blue'
+    });
     for (var i = 0; i<options.length; i++ ) {
-        if(i%2==0) buttons.push(new Button(width*(i/2),0,width/4,height/2,options[i]));
-        else buttons.push(new Button(width*(i/2),height/2,width/4,height/2,options[i]));
+        if(i%2==0) buttons.push(new Button(width*(Math.floor(i/2))/c,0,width/c,height/2,options[i],colors[i]));
+        else buttons.push(new Button(width*(Math.floor(i/2))/c,height/2,width/c,height/2,options[i],colors[i]));
     }
 }
 
@@ -47,6 +52,14 @@ function init(){
     addOption("Pizza");
     addOption("Chineese");
     addOption("More pizza");
+    addOption("Death");
+    addOption("Fast food");
+    addOption("Kebab");
+    addOption("Even more pizza");
+    addOption("Death");
+    addOption("Fast food");
+    addOption("Kebab");
+    addOption("Even more pizza");
     prepare();
 }
 
@@ -81,6 +94,7 @@ function Button(x,y,width,height,name,color){
     this.name = name;
     this.clicks = 0;
     this.effectSize = 0;
+    console.log(name+" created at "+x+", "+y);
     
     this.render = function(){
         //Render a circle
@@ -119,9 +133,8 @@ function Button(x,y,width,height,name,color){
         //For circles
         //var distance = Math.sqrt(Math.pow(x-mouse.x,2) + Math.pow(y-mouse.y,2));
         //if(distance<=size/2) this.newClick();
-        if(mouse.x<x || mouse.x>x+width || mouse.y<y || mouse.y>y+height) $("#log1").text("Click outside button");
-        else this.newClick();
-        }
+        if(!(mouse.x<x || mouse.x>x+width || mouse.y<y || mouse.y>y+height)) this.newClick();
+    }
     this.newClick = function(){
         this.clicks++;
         $("#log1").text(this.clicks);
