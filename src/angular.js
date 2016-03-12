@@ -1,5 +1,0 @@
-angular.module('eatspin', [])
-
-.directive({'
-
-});

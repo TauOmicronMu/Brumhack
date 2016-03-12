@@ -1,17 +1,37 @@
 <!DOCTYPE HTML>
 <html>
-
-<head>
-    <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
-    <script src="randomColor.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
-    <script src='Winwheel.js'></script>
-    <link rel='stylesheet' type='text/css' href='spinpage.css'> 
-</head>
-
-<body>
-    <div ng-controller="Controller">
-    </div>
-</body>
-
+    <head> 
+        <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
+        <script src="randomColor.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
+        <script src='Winwheel.js'></script>
+        <link rel='stylesheet' type='text/css' href='stylesheet.css'> 
+        <script src="https://code.jquery.com/jquery-1.12.1.js" integrity="sha256-VuhDpmsr9xiKwvTIHfYWCIQ84US9WqZsLfR4P7qF6O8=" crossorigin="anonymous"></script>
+    </head>
+    <body>
+         <!-- Front page  -->
+         <div id='page1'>
+         </div>
+         <!-- Lobby page -->
+         <div id='page2'>
+         </div>
+         <!-- Button Pressing page  -->
+         <div id='page3'>
+             <div id='minigame'> 
+                 <!--<script src='minigame.js'></script>-->
+             </div>
+         </div>
+         <!-- Spinny page  -->
+         <div id='page4'>
+            <div id='jumbowrapper'>
+                <div id='jumbotron'>       
+                    <canvas id='canvas' width='1000px' height='600px'>
+                        Canvas not supported, use another browser.
+                    </canvas>
+                    <img id="prizePointer" src="justeat_pointer.png" alt="V"/>
+                    <script src='spinpage.js'></script>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
