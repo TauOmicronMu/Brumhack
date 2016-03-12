@@ -18,9 +18,22 @@
     vertical-align : middle;
     text-align : center;
     margin : 0px auto;
+
+    <!-- Make the prize pointer work well. -->
+    position : relative;
 }
 
 #canvas {
     height : 80%;
     width : 80%;
+    z-index : 1;
 }
+
+#prizePointer {
+    position : absolute;
+    left : 44%;
+    top : -19%;
+    z-index : 999;
+    height : 25%;
+    width : 10%;
+} 
