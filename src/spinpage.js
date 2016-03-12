@@ -1,12 +1,19 @@
 var wheel = new Winwheel({
-        'numSegments' : 4,
+        'numSegments' : 6,
         'pointerAngle' : 0, 
+        'textFontSize' : 12,
+        'textFontFamily' : 'Quicksand',
+        'textFontWeight' : 'bold',
+        'lineWidth' : 0,
+        'strokeStyle' : 'black', 
         'segments'    :
             [
                 {'fillStyle' : '#eae56f', 'text' : 'Tom'},
                 {'fillStyle' : '#89f26e', 'text' : 'Mac'},
                 {'fillStyle' : '#7de6ef', 'text' : 'Matt'},
-                {'fillStyle' : '#e7706f', 'text' : 'Liam'}
+                {'fillStyle' : '#e7706f', 'text' : 'Liam'},
+                {'fillStyle' : '#000000', 'text' : 'Aiste'},
+                {'fillStyle' : '#ff0000', 'text' : 'Bianca'}
             ],
         'animation' : 
             {
@@ -27,4 +34,11 @@ var wheel = new Winwheel({
         */
 });
 
+/*
+ * Spin the wheel for 'duration' seconds. 
+ */
 wheel.startAnimation();
+
+/*
+ * Return the winner.
+ */
