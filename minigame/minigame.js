@@ -2,8 +2,8 @@ var animate = window.requestAnimationFrame || window.webkitRequestAnimationFrame
         window.setTimeout(callback, 1000 / 60)
     };
 var canvas = document.createElement("canvas");
-var width = 1000;
-var height = 600;
+var width = 1500;
+var height = 800;
 canvas.width = width;
 canvas.height = height;
 //canvas.addEventListener("click", mouseClickEvent, false); //Touch input
@@ -18,12 +18,13 @@ var button2 = new Button(0, canvas.height/2, canvas.width/2, canvas.height/2);
 var button3 = new Button(canvas.width/2, 0, canvas.width/2, canvas.height/2);
 var button4 = new Button(canvas.width/2, canvas.height/2, canvas.width/2, canvas.height/2);*/
 
-var INITIAL_SCORE = 100;
+var INITIAL_SCORE = 20;
+var MAX_BRIGHTNESS=0.75;
 var options = new Array();
 var scores = new Array();
 var colors = new Array();
 var buttons = new Array();
-var bar = new ProgressBar(0,height/2-25,1000,50);
+var bar = new ProgressBar(0,height/2-25,width,50);
 
 var started = false;
 
@@ -46,7 +47,7 @@ function addNewClicks(clicks){
 }
 
 function start(){
-    start=true;
+    started=true;
 }
 
 
@@ -62,6 +63,9 @@ function prepare(){
         //luminosity: 'dark',
         hue: 'blue'
     });
+    for(var i=0; i<colors.length; i++){
+        colors[i] = ensureDark(colors[i]);
+    }
     for (var i = 0; i<options.length; i++ ) {
         if(i%2==0) buttons.push(new Button(width*(Math.floor(i/2))/c,0,width/c,height/2,options[i],colors[i]));
         else buttons.push(new Button(width*(Math.floor(i/2))/c,height/2,width/c,height/2,options[i],colors[i]));
@@ -74,15 +78,22 @@ function init(){
     canvas.addEventListener("mousedown", onMouseDown, false);
     
     //Testing
+    console.log(parseInt("FD",16));
+    var color = "#04FFA0"
+    console.log(parseInt(color.substring(1,3),16));
+    console.log(parseInt(color.substring(3,5),16));
+    console.log(parseInt(color.substring(5,7),16));
+    
     addOption("Curry");
     addOption("Pizza");
     addOption("Chineese");
     addOption("More pizza");
     addOption("Death");
-    addOption("Fast food");
-    addOption("Kebab");
+    addOption("Middle Eastern'");
+    addOption("This is a really long text that might not fit into the button");
     addOption("Even more pizza");
     prepare();
+    start();
 }
 
 var render = function(){
@@ -98,7 +109,9 @@ var render = function(){
 };
 
 var update = function(){
-    
+    var newTime = Date.now();
+    delta = newTime - now;
+    now = newTime;
 };
 
 var step = function(){
@@ -140,9 +153,14 @@ function Button(x,y,width,height,name,color){
         }
         
         //Draw text
-        context.font= "bold 22px Arial";
         context.fillStyle = "#FFFFFF";
         context.globalAlpha = 0.8;
+        var textSize = 22;
+        context.font= "bold "+textSize+"px Arial";
+        while(context.measureText(name).width >= this.width){
+            textSize--;
+            context.font= "bold "+textSize+"px Arial";
+        }
         var textWidth = context.measureText(name).width;
         context.fillText(name,x+(this.width-textWidth)/2,y+height/2,width);
     }
@@ -199,6 +217,8 @@ function ProgressBar(x,y,width,height){
                 context.fillStyle = colors[i];
                 var rectWidth = scores[i]*this.width/total;
                 context.fillRect(pos, this.y, rectWidth, this.height);
+                context.fillStyle = "#000000";
+                context.fillRect(pos+rectWidth-2, this.y, 3, this.height);
                 pos+=rectWidth;    
             }
         
@@ -226,11 +246,30 @@ function ProgressBar(x,y,width,height){
 
 
 
-function darken(color){
-    var r = color.substring(1,2).parseInt;
-    var g = color.substring(3,4).parseInt;
-    var b = color.substring(5,6).parseInt;
-    //var lightness = (r+g+b)/255;
+function ensureDark(color){
+    console.log("EnsureDark called");
+    var r = parseInt(color.substring(1,3),16);
+    var g = parseInt(color.substring(3,5),16);
+    var b = parseInt(color.substring(5,7),16);
+    var brightness = (r+g+b)/(255*3);
+    console.log("Brightness: "+brightness);
+    if(brightness<MAX_BRIGHTNESS){
+        return color;  
+    } 
+    else{
+        var scale = MAX_BRIGHTNESS/brightness;
+        r*=scale;
+        g*=scale;
+        b*=scale;
+        console.log(r+", "+g+", "+b);
+        console.log(rgbToHex(r,g,b));
+        return rgbToHex(Math.floor(r),Math.floor(g),Math.floor(b));
+    }
+}
+
+//From http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb#5624139
+function rgbToHex(r, g, b) {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
 function onMouseDown(e) {
