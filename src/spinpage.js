@@ -1,5 +1,6 @@
 var wheel = new Winwheel({
         'numSegments' : 4,
+        'pointerAngle' : 0, 
         'segments'    :
             [
                 {'fillStyle' : '#eae56f', 'text' : 'Tom'},
@@ -12,6 +13,12 @@ var wheel = new Winwheel({
                 'type' : 'spinToStop',
                 'duration' : 5,
                 'spins' : 8
+            },
+        'pointerGuide' : 
+            {
+                'display' : true,
+                'strokeStyle' : 'red',
+                'lineWidth' : 3
             }
 });
 
