@@ -1,3 +1,6 @@
 [submodule "javascript-winwheel"]
 	path = javascript-winwheel
 	url = https://github.com/zarocknz/javascript-winwheel
+[submodule "randomColor"]
+	path = randomColor
+	url = https://github.com/davidmerfield/randomColor
