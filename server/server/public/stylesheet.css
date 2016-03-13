@@ -103,3 +103,11 @@ input[type=submit]{
     position : absolute;
     transform : translate(-50%);
 }
+
+#left {
+    text-align : center;
+    left : 50%;
+    top : 50%;
+    position: absolute;
+    transform : translate(-50%, -50%);
+}
