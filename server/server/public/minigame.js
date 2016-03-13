@@ -220,7 +220,7 @@ function Button(x,y,width,height,name,color){
             textSize--;
             context.font= "bold "+textSize+"px Arial";
         }*/
-        console.log(name);
+        //console.log(name);
         var textWidth = context.measureText(name).width;
         context.fillText(name,this.x+(this.width-textWidth)/2,this.y+this.height/2,this.width);
     }
