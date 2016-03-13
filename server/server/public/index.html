@@ -17,10 +17,11 @@
                 var name = genName();
                 createRoom(name, $("#postcodeInput").val());
                 joinRoom(name, function callback() {
+                    console.log("CALLBACK");
                     moveIntoView(3);
                     start(); 
-               ` }, function(cuisines) { 
-                   addCuisines(cuisines);}
+                 }, function(cuisines) { 
+                   addCuisines(cuisines);});
                 $("#lobbycode").text("Lobby Code : " + name);
                 moveIntoView(2);    
             }
@@ -28,6 +29,7 @@
             function joinLobby() {
                  console.log($("#lobbycodeInput").val());
                  joinRoom($("#lobbycodeInput").val(), function callback() {
+                     console.log("CALLBACK");
                      moveIntoView(3);
                      start();
                  }, function(cuisines) {
