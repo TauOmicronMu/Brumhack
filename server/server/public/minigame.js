@@ -161,7 +161,6 @@ var render = function(){
     bar.reposition(0,height/2-25,width,50);
     
     for (var i = 0; i<buttons.length; i++ ) {
-           console.log(buttons[i].name);
            buttons[i].render();
     }
     bar.render();
