@@ -1,2 +1,6 @@
+addStartEmitter(emitter) - you may or may not get this from Matt
+addOptions(cuisines) - add an array of cuisines
+
+
 getWinner() - returns cauisine that won
 getFinalScores() - gets the data about final score
