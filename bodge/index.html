@@ -11,20 +11,16 @@
         <script src="app.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
         <script src="./sockets.js"></script>
-        <script src="minigame.js"></script>
+        <!--<script src="minigame.js"></script>-->
 
         <script> 
             function newLobby() {
                 var name = genName();
                 createRoom(name, $("#postcodeInput").val());
                 joinRoom(name, function callback() {
-                    console.log("CALLBACK");
-                    moveIntoView(3);
-                    start(); 
-                 }, function(cuisines) { 
-                   addCuisines(cuisines);});
+                    console.log("CALLBACK"); 
+                 });
                 $("#lobbycode").text("Lobby Code : " + name);
-                establishConnection();
                 moveIntoView(2);    
             }
 
@@ -32,17 +28,14 @@
                  console.log($("#lobbycodeInput").val());
                  joinRoom($("#lobbycodeInput").val(), function callback() {
                      console.log("CALLBACK");
-                     moveIntoView(3);
-                     start();
-                 }, function(cuisines) {
-                    addCuisines(cuisines);});
+                 });
                  $("#lobbycode").text("Lobby Code : " + $("#lobbycodeInput").val());
-                 establishConnection();
                  moveIntoView(2);            
             }
              
             function everyoneReady() {
-                startGame();
+                moveIntoView(4);
+                spinWheel();
             }
  
         </script>
