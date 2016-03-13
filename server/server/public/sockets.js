@@ -13,8 +13,11 @@ function createRoom(roomName, postcode){
   socket.emit("createRoom", roomName, postcode);
 }
 
-function joinRoom(roomName){
+function joinRoom(roomName, gameStartCb){
   socket.emit("joinRoom", roomName);
+  socket.on("gameStart", function(){
+    gameStartCb();
+  });
 }
 
 function startGame(){
@@ -39,3 +42,4 @@ function joinGame(newPointCb, votesLoadedCb, gameEndedCb){
 function addPoint(cuisine){
   socket.emit("addPoint", cuisine);
 }
+
