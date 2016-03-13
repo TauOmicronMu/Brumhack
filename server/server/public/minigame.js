@@ -216,10 +216,11 @@ function Button(x,y,width,height,name,color){
         context.globalAlpha = 0.8;
         var textSize = 22;
         context.font= "bold "+textSize+"px Arial";
-        while(context.measureText(name).width >= this.width){
+        /*while(context.measureText(name).width >= this.width){
             textSize--;
             context.font= "bold "+textSize+"px Arial";
-        }
+        }*/
+        //console.log(name);
         var textWidth = context.measureText(name).width;
         context.fillText(name,this.x+(this.width-textWidth)/2,this.y+this.height/2,this.width);
     }
