@@ -31,6 +31,7 @@ var countdown = new Array();
 
 var started = false;
 var finished = false;
+var owner = false;
 
 //For interacting
 
@@ -68,6 +69,23 @@ function addOption(name){
     scores.push(INITIAL_SCORE);
 }
 
+function addOptions(options){
+    for(var i=0; i<options.length;i++){
+        addOption(options[i]);
+    }
+    prepare();
+}
+
+function setOwner(){
+    owner = true;
+}
+
+function sendStartGame(){
+    //TODO
+    start();
+}
+
+
 function prepare(){
     colors = randomColor({
         count: options.length,
@@ -98,7 +116,6 @@ function init(){
     canvas.addEventListener("mousedown", onMouseDown, false);
     
     //Testing
-    
     addOption("Curry");
     addOption("Pizza");
     addOption("Chineese");
@@ -107,7 +124,8 @@ function init(){
     addOption("Middle Eastern'");
     addOption("This is a really long text that might not fit into the button");
     addOption("Even more pizza");
-    prepare();
+    
+    if(buttons.length<1) prepare();
     resizeCanvas();
 }
 
@@ -131,7 +149,10 @@ var update = function(){
     var newTime = Date.now();
     delta = newTime - now;
     now = newTime;
-    if (countdown.length==0 && now>startTime+5000) start();
+    
+    //Testing
+    setOwner();
+    //if (countdown.length==0 && now>startTime+5000) start();
 };
 
 var step = function(){
@@ -153,11 +174,6 @@ function Button(x,y,width,height,name,color){
     //console.log(name+" created at "+x+", "+y);
     
     this.render = function(){
-        //Render a circle
-        /*context.beginPath();
-        context.arc(x,y,size/2,0,Math.PI*2,false);
-        context.fillStyle = "#0000FF";
-        context.fill();*/
         context.fillStyle = this.getColor();
         context.globalAlpha = 1;
         context.fillRect(this.x, this.y, this.width, this.height);
@@ -207,9 +223,6 @@ function Button(x,y,width,height,name,color){
         return this.color;
     }
     this.tryClick = function(mouse){
-        //For circles
-        //var distance = Math.sqrt(Math.pow(x-mouse.x,2) + Math.pow(y-mouse.y,2));
-        //if(distance<=size/2) this.newClick();
         if(!(mouse.x<this.x || mouse.x>this.x+this.width || mouse.y<this.y || mouse.y>this.y+this.height)) this.newClick();
     }
     this.newClick = function(){
@@ -224,8 +237,11 @@ function Button(x,y,width,height,name,color){
 
 var incremementScore = function(name){
     for (var i = 0; i<scores.length; i++ ) {
-           if(options[i]==name) scores[i]++;
+           if(options[i]==name){
+               scores[i]++;
+           }
     }
+    addPoint(name); //
 }
 
 
@@ -265,7 +281,8 @@ function ProgressBar(x,y,width,height){
             context.font= "bold 22px Arial";
             context.fillStyle = "#FFFFFF";
             var text = "Waiting for other people to join...";
-            if(finished) text = "Game finished!";
+            if(owner && countdown.length==0) text = "Click to start game";
+            else if(finished) text = "Game finished!";
             else if(countdown.length>0) text = "About to start...";
             var textWidth = context.measureText(text).width;
             context.fillText(text,this.x+(this.width-textWidth)/2,this.y+this.height/2,this.width);
@@ -277,6 +294,14 @@ function ProgressBar(x,y,width,height){
         context.strokeStyle="black";
         context.rect(this.x,this.y,this.width,this.height);
         context.stroke();
+    }
+    this.tryClick = function(mouse){
+        console.log("Tried clicking");
+        if(owner && countdown.length==0 && !(mouse.x<this.x || mouse.x>this.x+this.width || mouse.y<this.y || mouse.y>this.y+this.height)) this.newClick();
+    }
+    this.newClick = function(){
+        console.log("Clicked!");
+        sendStartGame();
     }
 }
 
@@ -333,20 +358,19 @@ function ensureDark(color){
     }
 }
 
-//From http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb#5624139
+//rgToHex() from http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb#5624139
 function rgbToHex(r, g, b) {
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
 function onMouseDown(e) {
-    $("#log2").text("Registered click");
-    if(!started || finished) return;
     var mouse = getMouse(e, canvas);
+    bar.tryClick(mouse);
+  
+    if(!started || finished) return;
     for (var i = 0; i<buttons.length; i++ ) {
            buttons[i].tryClick(mouse);
     }
-    //button1.tryClick(mouse);
-   $("#debug2").text("Mouse click at"+mouse.x);
 }
 
 
