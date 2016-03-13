@@ -64,6 +64,7 @@ body {
 
 #page3 {
     position : fixed;
+    left : -500%;
 }
 
 #page4 {
