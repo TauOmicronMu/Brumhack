@@ -355,5 +355,5 @@ function getMouse(e, canvas) {
 }
 
 init();
-document.body.appendChild(canvas);
+$("#minigame").append(canvas);
 animate(step);

@@ -58,4 +58,4 @@ var wheel = new Winwheel({
  */
 wheel.startAnimation();
 setTimeout(alertFinished, duration*1000);
-
+setTimeout(moveIntoView, 5000,3);

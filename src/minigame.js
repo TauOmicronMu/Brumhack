@@ -13,6 +13,7 @@ var context = canvas.getContext('2d');
 
 var delta = 0;
 var now = Date.now();
+var startTime = Date.now();
 /*var button1 = new Button(0, 0, canvas.width/2, canvas.height/2);
 var button2 = new Button(0, canvas.height/2, canvas.width/2, canvas.height/2);
 var button3 = new Button(canvas.width/2, 0, canvas.width/2, canvas.height/2);
@@ -26,7 +27,10 @@ var colors = new Array();
 var buttons = new Array();
 var bar = new ProgressBar(0,height/2-25,width,50);
 
+var countdown = new Array();
+
 var started = false;
+var finished = false;
 
 //For interacting
 
@@ -47,7 +51,15 @@ function addNewClicks(clicks){
 }
 
 function start(){
-    started=true;
+    setTimeout(function(){started=true;}, 3000);
+    countdown.push(new CountdownNumber(width/2,height/2,80,now,now+1000,"3"));
+    countdown.push(new CountdownNumber(width/2,height/2,80,now+1000,now+2000,"2"));
+    countdown.push(new CountdownNumber(width/2,height/2,80,now+2000,now+3000,"1"));
+    countdown.push(new CountdownNumber(width/2,height/2,80,now+3000,now+4000,"START"));
+}
+
+function finish(){
+    finished=true;
 }
 
 
@@ -93,7 +105,6 @@ function init(){
     addOption("This is a really long text that might not fit into the button");
     addOption("Even more pizza");
     prepare();
-    start();
 }
 
 var render = function(){
@@ -106,12 +117,16 @@ var render = function(){
            buttons[i].render();
     }
     bar.render();
+    for(var i=0;i<countdown.length;i++){
+        countdown[i].render();
+    }
 };
 
 var update = function(){
     var newTime = Date.now();
     delta = newTime - now;
     now = newTime;
+    if (countdown.length==0 && now>startTime+5000) start();
 };
 
 var step = function(){
@@ -222,12 +237,6 @@ function ProgressBar(x,y,width,height){
                 pos+=rectWidth;    
             }
         
-        //Draw border
-        context.beginPath();
-        context.lineWidth="3";
-        context.strokeStyle="black";
-        context.rect(x,y,width,height);
-        context.stroke();
         }else{
             context.globalAlpha = 1;
             context.fillStyle = this.color;
@@ -236,8 +245,44 @@ function ProgressBar(x,y,width,height){
             context.font= "bold 22px Arial";
             context.fillStyle = "#FFFFFF";
             var text = "Waiting for other people to join...";
+            if(countdown.length>0) text = "About to start...";
             var textWidth = context.measureText(text).width;
             context.fillText(text,x+(this.width-textWidth)/2,y+height/2,width);
+        }
+        
+        //Draw border
+        context.beginPath();
+        context.lineWidth="3";
+        context.strokeStyle="black";
+        context.rect(x,y,width,height);
+        context.stroke();
+    }
+}
+
+function CountdownNumber(x,y,fontSize,start,end,digit){
+    this.x=x;
+    this.y=y;
+    this.fontSize = fontSize;
+    this.start = start;
+    this.end = end;
+    this.digit = digit;
+    this.render = function(){
+        if(now<start || now>end) return;
+        else{
+            console.log("Countdown is happening")
+            var progress = (now-start)/(end-start);
+            var size = fontSize*(1+progress*2);
+            var alpha = 1 - progress;
+            
+            context.font= "bold +"+size+"px Arial";
+            var textWidth = context.measureText(this.digit).width;
+            var textHeight = size;
+            console.log(digit+", "+textWidth+", "+textHeight);
+            
+            context.fillStyle = "#000000";
+            context.globalAlpha = 1-progress;
+            //context.fillText("test",400,400,200);
+            context.fillText(digit+"",this.x-textWidth/2,y); //,this.y+textHeight/2
         }
     }
 }
@@ -274,7 +319,7 @@ function rgbToHex(r, g, b) {
 
 function onMouseDown(e) {
     $("#log2").text("Registered click");
-    if(!started) return;
+    if(!started || finished) return;
     var mouse = getMouse(e, canvas);
     for (var i = 0; i<buttons.length; i++ ) {
            buttons[i].tryClick(mouse);
@@ -309,5 +354,15 @@ function getMouse(e, canvas) {
 }
 
 init();
-document.body.appendChild(canvas);
+
+window.addEventListener('resize', resizeCanvas, false);
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+     
+    //DRAW THE SHIT PLS.
+}
+
+$("#minigame").append(canvas);
 animate(step);
