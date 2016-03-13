@@ -423,8 +423,8 @@ init();
 window.addEventListener('resize', resizeCanvas, false);
 
 function resizeCanvas() {
-    canvas.width = $(document).width();
-    canvas.height = $(document).height();
+    canvas.width = document.width();
+    canvas.height = document.height();
 }
 
 $("#minigame").append(canvas);

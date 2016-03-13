@@ -14,7 +14,7 @@ function moveIntoView(n) {
      */
      for(var i = 0; i < pages.length; i++) {
          if(!((n-1) === i)) {
-             console.log("Attempted to move page " + i + " into view.");
+             console.log("Attempted to move page " + i + " out of view.");
              $(pages[i]).css("left","-500%");
              $(pages[i]).css("top","-500%");
              $(pages[i]).css("height","0px");
