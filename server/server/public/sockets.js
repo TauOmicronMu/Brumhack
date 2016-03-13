@@ -20,6 +20,7 @@ function joinRoom(roomName, gameStartCb){
   });
   socket.on("cuisinesLoaded", function(cuisines){
     console.log(cuisines);
+    addCuisines(cuisines);
     socket.off("cuisinesLoaded");
   });
 }
