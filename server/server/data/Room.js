@@ -31,6 +31,7 @@ module.exports = function(name, postcode, emitter){
   };
 
   self.startGame = function(){
+    emitter.emit('gameStart');
     if(!self.game || self.game.timeLeft() < 0){
       self.game = new Game(self.cuisines, function(votes, cuisine){//game ended
         console.log("game ended");

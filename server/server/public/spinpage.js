@@ -2,11 +2,13 @@
  * Work out the colours for the segments, based on the
  * number of overall segments.
  */
+var result;
 
-var segments = 6;
+
+var segments = 8;
 
 var colours = randomColor({
-	count : segments,
+	count : 8,
         luminosity : "dark",
 });
 
@@ -16,7 +18,21 @@ function alertFinished() {
     alert(wheel.getIndicatedSegment().text + " wins!");
 }
 
-var data = getFinalScores();
+function setProperties(){
+    var data = getFinalScores();
+    var sum=data.map(function(a) {return a.numVotes;}).reduce(function(a,b){return a+b;},0);
+    result = getWinner();
+    segments = data.length;
+    var segmentData = new Array();
+    for(var i=1;i<=data.length;i++){
+        segmentData[i] = {
+            'fillStyle' : colours[i-1],
+            'text' : data[i-1].name,
+            'size' : data[i-1].numVotes*360/sum
+        };
+    }
+}
+
 
 var wheel = new Winwheel({
         'numSegments' : segments,

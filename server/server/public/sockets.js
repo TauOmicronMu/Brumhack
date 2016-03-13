@@ -18,6 +18,10 @@ function joinRoom(roomName, gameStartCb){
   socket.on("gameStart", function(){
     gameStartCb();
   });
+  socket.on("cuisinesLoaded", function(cuisines){
+    console.log(cuisines);
+    socket.off("cuisinesLoaded");
+  });
 }
 
 function startGame(){
