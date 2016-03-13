@@ -18,8 +18,9 @@
                 createRoom(name, $("#postcodeInput").val());
                 joinRoom(name, function callback() {
                     moveIntoView(3);
-                    $.getScript("minigame.js", function(){});
-                    start(); 
+                    $.getScript("minigame.js", function(){
+                      start();
+                    });
                 });
                 $("#lobbycode").text("Lobby Code : " + name);
                 moveIntoView(2);    
