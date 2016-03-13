@@ -140,3 +140,9 @@ setTimeout(moveIntoView, 10000,3);
 setTimeout(moveIntoView, 15000,4);
 setTimeout(moveIntoView, 25000, 1);
 */
+
+var canvas = document.getElementById('canvas');
+canvas.onclick = function(e) {
+    var clickedSegment = wheel.getSegmentAt(e.clientX, e.clientY);
+    if(clickedSegment) { console.log(clickedSegment.text)};
+}
