@@ -1,3 +1,48 @@
+var cuisines =
+[ { name: 'Pizza', numRestaurants: 66 },
+  { name: 'Indian', numRestaurants: 56 },
+  { name: 'Chinese', numRestaurants: 24 },
+  { name: 'Italian', numRestaurants: 23 },
+  { name: 'Bangladeshi', numRestaurants: 20 },
+  { name: 'Chicken', numRestaurants: 20 },
+  { name: 'Kebab', numRestaurants: 20 },
+  { name: 'Fish & Chips', numRestaurants: 13 },
+  { name: 'Peri Peri', numRestaurants: 11 },
+  { name: 'Desserts', numRestaurants: 10 },
+  { name: 'Curry', numRestaurants: 9 },
+  { name: 'American', numRestaurants: 8 },
+  { name: 'Burgers', numRestaurants: 7 },
+  { name: 'Oriental', numRestaurants: 7 },
+  { name: 'Caribbean', numRestaurants: 6 },
+  { name: 'Cakes', numRestaurants: 5 },
+  { name: 'Middle Eastern', numRestaurants: 5 },
+  { name: 'English', numRestaurants: 4 },
+  { name: 'Mexican', numRestaurants: 3 },
+  { name: 'Persian', numRestaurants: 3 },
+  { name: 'Jamaican', numRestaurants: 3 },
+  { name: 'Sandwiches', numRestaurants: 3 },
+  { name: 'Healthy', numRestaurants: 2 },
+  { name: 'Grill', numRestaurants: 2 },
+  { name: 'Breakfast', numRestaurants: 2 },
+  { name: 'Lebanese', numRestaurants: 2 },
+  { name: 'Vegetarian', numRestaurants: 2 },
+  { name: 'Thai', numRestaurants: 2 },
+  { name: 'Arabic', numRestaurants: 2 },
+  { name: 'Pasta', numRestaurants: 2 },
+  { name: 'Retro Sweets', numRestaurants: 1 },
+  { name: 'Gluten Free', numRestaurants: 1 },
+  { name: 'Pakistani', numRestaurants: 1 },
+  { name: 'Japanese', numRestaurants: 1 },
+  { name: 'Sushi', numRestaurants: 1 },
+  { name: 'Iranian', numRestaurants: 1 },
+  { name: 'African', numRestaurants: 1 },
+  { name: 'Mediterranean', numRestaurants: 1 } ]
+
+/*
+ * Process the data from the API.
+ */
+var top8 = ['Pizza', 'Indian', 'Chinese', 'Italian', 'Bangladeshi', 'Chicken', 'Kebab', 'Fish & Chips']
+
 /*
  * Work out the colours for the segments, based on the
  * number of overall segments.
@@ -5,17 +50,17 @@
 var result;
 
 
-var segments = 6;
+var segments = 8;
 
 var colours = randomColor({
-	count : 6,
+	count : 8,
         luminosity : "dark",
 });
 
 var duration = 5;
 
 function alertFinished() {
-    alert(wheel.getIndicatedSegment().text + " wins!");
+    alert("You should get : " + wheel.getIndicatedSegment().text);
 }
 
 /*
@@ -55,12 +100,14 @@ var wheel = new Winwheel({
         'lineWidth' : 8, 
         'segments'    :
             [
-                {'fillStyle' : colours[0], 'text' : 'Chicken'},
-                {'fillStyle' : colours[1], 'text' : 'Pizza'},
-                {'fillStyle' : colours[2], 'text' : 'Chinese'},
-                {'fillStyle' : colours[3], 'text' : 'Curry'},
-                {'fillStyle' : colours[4], 'text' : 'Japanese'},
-                {'fillStyle' : colours[5], 'text' : 'Fish & Chips'}
+                {'fillStyle' : colours[0], 'text' : top8[0]},
+                {'fillStyle' : colours[1], 'text' : top8[1]},
+                {'fillStyle' : colours[2], 'text' : top8[2]},
+                {'fillStyle' : colours[3], 'text' : top8[3]},
+                {'fillStyle' : colours[4], 'text' : top8[4]},
+                {'fillStyle' : colours[5], 'text' : top8[5]},
+                {'fillStyle' : colours[6], 'text' : top8[6]},
+                {'fillStyle' : colours[7], 'text' : top8[7]}
             ],
         'animation' : 
             {
