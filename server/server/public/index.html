@@ -17,10 +17,10 @@
                 var name = genName();
                 createRoom(name, $("#postcodeInput").val());
                 joinRoom(name, function callback() {
-                    $.getScript("minigame.js", function(){});
                     moveIntoView(3);
                     start(); 
-                });
+                }, function(cuisines) { 
+                   addCuisines(cuisines);});
                 $("#lobbycode").text("Lobby Code : " + name);
                 moveIntoView(2);    
             }
@@ -28,10 +28,10 @@
             function joinLobby() {
                  console.log($("#lobbycodeInput").val());
                  joinRoom($("#lobbycodeInput").val(), function callback() {
-                     $.getScript("minigame.js", function(){});
                      moveIntoView(3);
                      start();
-                 });
+                 }, function(cuisines) {
+                    addCuisines(cuisines);});
                  $("#lobbycode").text("Lobby Code : " + $("#lobbycodeInput").val());
                  moveIntoView(2);            
             }
@@ -77,6 +77,7 @@
          <!-- Button Pressing page  -->
          <div id='page3'>
              <div id='minigame'>
+                 <script src="minigame.js"></script>
              </div>
          </div>
          <!-- Spinny page  -->
