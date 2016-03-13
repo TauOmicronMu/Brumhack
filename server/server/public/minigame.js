@@ -83,9 +83,9 @@ function addOption(name){
     scores.push(INITIAL_SCORE);
 }
 
-function addOptions(options){
-    for(var i=0; i<options.length;i++){
-        addOption(options[i]);
+function addCuisines(options){
+    for(var i=0; i<options.length && i<=8;i++){
+        addOption(options[i].name);
     }
     prepare();
 }
@@ -139,14 +139,14 @@ function init(){
     });
     
     //Testing
-    addOption("Curry");
+    /*addOption("Curry");
     addOption("Pizza");
     addOption("Chineese");
     addOption("More pizza");
     addOption("Death");
     addOption("Middle Eastern'");
     addOption("This is a really long text that might not fit into the button");
-    addOption("Even more pizza");
+    addOption("Even more pizza");*/
     
     if(buttons.length<1) prepare();
     resizeCanvas();
