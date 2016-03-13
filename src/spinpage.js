@@ -16,6 +16,8 @@ function alertFinished() {
     alert(wheel.getIndicatedSegment().text + " wins!");
 }
 
+var data = getFinalScores();
+
 var wheel = new Winwheel({
         'numSegments' : segments,
         'pointerAngle' : 0, 
@@ -56,6 +58,11 @@ var wheel = new Winwheel({
 /*
  * Spin the wheel for 'duration' seconds. 
  */
-wheel.startAnimation();
-setTimeout(alertFinished, duration*1000);
-setTimeout(moveIntoView, 5000,3);
+function spinWheel() {
+    wheel.startAnimation();
+} 
+/*setTimeout(alertFinished, duration*1000);
+setTimeout(moveIntoView, 10000,3);
+setTimeout(moveIntoView, 15000,4);
+setTimeout(moveIntoView, 25000, 1);
+*/

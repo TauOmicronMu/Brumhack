@@ -245,7 +245,8 @@ function ProgressBar(x,y,width,height){
             context.font= "bold 22px Arial";
             context.fillStyle = "#FFFFFF";
             var text = "Waiting for other people to join...";
-            if(countdown.length>0) text = "About to start...";
+            if(finished) text = "Game finished!";
+            else if(countdown.length>0) text = "About to start...";
             var textWidth = context.measureText(text).width;
             context.fillText(text,x+(this.width-textWidth)/2,y+height/2,width);
         }
@@ -354,5 +355,5 @@ function getMouse(e, canvas) {
 }
 
 init();
-document.body.appendChild(canvas);
+$("#minigame").append(canvas);
 animate(step);
