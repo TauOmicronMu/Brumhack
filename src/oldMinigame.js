@@ -69,6 +69,7 @@ function addOption(name){
 }
 
 function prepare(){
+    var c = Math.floor(options.length/2);
     colors = randomColor({
         count: options.length,
         //luminosity: 'dark',
@@ -77,18 +78,9 @@ function prepare(){
     for(var i=0; i<colors.length; i++){
         colors[i] = ensureDark(colors[i]);
     }
-    var c = Math.floor(options.length/2);
     for (var i = 0; i<options.length; i++ ) {
         if(i%2==0) buttons.push(new Button(width*(Math.floor(i/2))/c,0,width/c,height/2,options[i],colors[i]));
         else buttons.push(new Button(width*(Math.floor(i/2))/c,height/2,width/c,height/2,options[i],colors[i]));
-    }
-}
-
-function rebuildButtons(){
-    var c = Math.floor(options.length/2);
-    for(var i=0;i<buttons.length;i++){
-        if(i%2==0) buttons[i].reposition(width*(Math.floor(i/2))/c, 0, width/c, height/2);
-        else buttons[i].reposition(width*(Math.floor(i/2))/c,height/2,width/c,height/2);
     }
 }
 
@@ -98,6 +90,11 @@ function init(){
     canvas.addEventListener("mousedown", onMouseDown, false);
     
     //Testing
+    console.log(parseInt("FD",16));
+    var color = "#04FFA0"
+    console.log(parseInt(color.substring(1,3),16));
+    console.log(parseInt(color.substring(3,5),16));
+    console.log(parseInt(color.substring(5,7),16));
     
     addOption("Curry");
     addOption("Pizza");
@@ -108,15 +105,13 @@ function init(){
     addOption("This is a really long text that might not fit into the button");
     addOption("Even more pizza");
     prepare();
-    resizeCanvas();
 }
 
 var render = function(){
-    width = canvas.width;
-    height = canvas.height;
-    //console.log(width+", "+height);
-    rebuildButtons();
-    bar.reposition(0,height/2-25,width,50);
+    /*button1.render();
+	button2.render();
+    button3.render();
+    button4.render();*/
     
     for (var i = 0; i<buttons.length; i++ ) {
            buttons[i].render();
@@ -150,7 +145,7 @@ function Button(x,y,width,height,name,color){
     this.name = name;
     this.clicks = 0;
     this.effectSize = 0;
-    //console.log(name+" created at "+x+", "+y);
+    console.log(name+" created at "+x+", "+y);
     
     this.render = function(){
         //Render a circle
@@ -160,7 +155,7 @@ function Button(x,y,width,height,name,color){
         context.fill();*/
         context.fillStyle = this.getColor();
         context.globalAlpha = 1;
-        context.fillRect(this.x, this.y, this.width, this.height);
+        context.fillRect(x, y, width, height);
         
         //Draw effect
         if(this.effectSize>0){
@@ -182,16 +177,8 @@ function Button(x,y,width,height,name,color){
             context.font= "bold "+textSize+"px Arial";
         }
         var textWidth = context.measureText(name).width;
-        context.fillText(name,this.x+(this.width-textWidth)/2,this.y+this.height/2,this.width);
+        context.fillText(name,x+(this.width-textWidth)/2,y+height/2,width);
     }
-    this.reposition = function(x,y,width,height){
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-    }
-    
-    
     this.getColor = function(){
         if(this.color==undefined){
             var r = Math.round(Math.random()*200+56).toString(16);
@@ -210,7 +197,7 @@ function Button(x,y,width,height,name,color){
         //For circles
         //var distance = Math.sqrt(Math.pow(x-mouse.x,2) + Math.pow(y-mouse.y,2));
         //if(distance<=size/2) this.newClick();
-        if(!(mouse.x<this.x || mouse.x>this.x+this.width || mouse.y<this.y || mouse.y>this.y+this.height)) this.newClick();
+        if(!(mouse.x<x || mouse.x>x+width || mouse.y<y || mouse.y>y+height)) this.newClick();
     }
     this.newClick = function(){
         this.clicks++;
@@ -236,13 +223,6 @@ function ProgressBar(x,y,width,height){
     this.height = height;
     this.color = randomColor({hue: 'blue'});
     
-    this.reposition = function(x,y,width,height){
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-    }
-    
     this.render = function(){
         if(started){
             var total = scores.reduce(function(a,b){return a+b;},0);
@@ -265,17 +245,16 @@ function ProgressBar(x,y,width,height){
             context.font= "bold 22px Arial";
             context.fillStyle = "#FFFFFF";
             var text = "Waiting for other people to join...";
-            if(finished) text = "Game finished!";
-            else if(countdown.length>0) text = "About to start...";
+            if(countdown.length>0) text = "About to start...";
             var textWidth = context.measureText(text).width;
-            context.fillText(text,this.x+(this.width-textWidth)/2,this.y+this.height/2,this.width);
+            context.fillText(text,x+(this.width-textWidth)/2,y+height/2,width);
         }
         
         //Draw border
         context.beginPath();
         context.lineWidth="3";
         context.strokeStyle="black";
-        context.rect(this.x,this.y,this.width,this.height);
+        context.rect(x,y,width,height);
         context.stroke();
     }
 }
@@ -290,7 +269,7 @@ function CountdownNumber(x,y,fontSize,start,end,digit){
     this.render = function(){
         if(now<start || now>end) return;
         else{
-            //console.log("Countdown is happening")
+            console.log("Countdown is happening")
             var progress = (now-start)/(end-start);
             var size = fontSize*(1+progress*2);
             var alpha = 1 - progress;
@@ -298,7 +277,7 @@ function CountdownNumber(x,y,fontSize,start,end,digit){
             context.font= "bold +"+size+"px Arial";
             var textWidth = context.measureText(this.digit).width;
             var textHeight = size;
-            //console.log(digit+", "+textWidth+", "+textHeight);
+            console.log(digit+", "+textWidth+", "+textHeight);
             
             context.fillStyle = "#000000";
             context.globalAlpha = 1-progress;
@@ -313,12 +292,12 @@ function CountdownNumber(x,y,fontSize,start,end,digit){
 
 
 function ensureDark(color){
-    //console.log("EnsureDark called");
+    console.log("EnsureDark called");
     var r = parseInt(color.substring(1,3),16);
     var g = parseInt(color.substring(3,5),16);
     var b = parseInt(color.substring(5,7),16);
     var brightness = (r+g+b)/(255*3);
-    //console.log("Brightness: "+brightness);
+    console.log("Brightness: "+brightness);
     if(brightness<MAX_BRIGHTNESS){
         return color;  
     } 
@@ -327,8 +306,8 @@ function ensureDark(color){
         r*=scale;
         g*=scale;
         b*=scale;
-        //console.log(r+", "+g+", "+b);
-        //console.log(rgbToHex(r,g,b));
+        console.log(r+", "+g+", "+b);
+        console.log(rgbToHex(r,g,b));
         return rgbToHex(Math.floor(r),Math.floor(g),Math.floor(b));
     }
 }
@@ -375,12 +354,14 @@ function getMouse(e, canvas) {
 }
 
 init();
+
 window.addEventListener('resize', resizeCanvas, false);
 
 function resizeCanvas() {
-    canvas.width = $(document).width();
-    canvas.height = $(document).height();
-    //console.log($(document).width()+" -- "+$(document).height());
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+     
+    //DRAW THE SHIT PLS.
 }
 
 $("#minigame").append(canvas);
