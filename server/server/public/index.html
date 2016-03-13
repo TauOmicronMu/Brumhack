@@ -15,7 +15,7 @@
         <script> 
             function newLobby() {
                 var name = genName();
-                createRoom(name, $("#postcodeInput").value);
+                createRoom(name, $("#postcodeInput").val());
                 joinRoom(name, function callback() {
                     moveIntoView(3);
                 });
@@ -24,10 +24,11 @@
             }
 
             function joinLobby() {
-                 joinRoom($("#lobbycodeInput").value, function callback() {
+                 console.log($("#lobbycodeInput").val());
+                 joinRoom($("#lobbycodeInput").val(), function callback() {
                      moveIntoView(3);
                  });
-                 $("#lobbycode").text("Lobby Code : " + $("#lobbycodeInput").value);
+                 $("#lobbycode").text("Lobby Code : " + $("#lobbycodeInput").val());
                  moveIntoView(2);            
             }
         
@@ -50,7 +51,7 @@
                 <div class='entryform' id='joinlobby'>
                     <div display='table-cell'> Lobby Code : </div>
                     <input type="text" id='lobbycodeInput' />
-                    <input type="submit" value="Join Lobby"/>
+                    <input type="submit" value="Join Lobby" onclick='joinLobby()'/>
                 </div>
             </div>
          </div>
