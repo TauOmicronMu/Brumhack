@@ -13,14 +13,11 @@ var context = canvas.getContext('2d');
 
 var delta = 0;
 var now = Date.now();
-var startTime = Date.now();
-/*var button1 = new Button(0, 0, canvas.width/2, canvas.height/2);
-var button2 = new Button(0, canvas.height/2, canvas.width/2, canvas.height/2);
-var button3 = new Button(canvas.width/2, 0, canvas.width/2, canvas.height/2);
-var button4 = new Button(canvas.width/2, canvas.height/2, canvas.width/2, canvas.height/2);*/
+var startTime;
 
 var INITIAL_SCORE = 20;
 var MAX_BRIGHTNESS=0.75;
+var GAME_DURATION = 15; //In seconds
 var options = new Array();
 var scores = new Array();
 var colors = new Array();
@@ -53,6 +50,7 @@ function addNewClicks(clicks){
 
 function start(){
     setTimeout(function(){started=true;}, 3000);
+    startTime = now+3000;
     countdown.push(new CountdownNumber(width/2,height/2,80,now,now+1000,"3"));
     countdown.push(new CountdownNumber(width/2,height/2,80,now+1000,now+2000,"2"));
     countdown.push(new CountdownNumber(width/2,height/2,80,now+2000,now+3000,"1"));
@@ -149,10 +147,9 @@ var update = function(){
     var newTime = Date.now();
     delta = newTime - now;
     now = newTime;
-    
+    if(started && now>startTime+GAME_DURATION*1000) finish();
     //Testing
     setOwner();
-    //if (countdown.length==0 && now>startTime+5000) start();
 };
 
 var step = function(){
@@ -260,7 +257,7 @@ function ProgressBar(x,y,width,height){
     }
     
     this.render = function(){
-        if(started){
+        if(started && !finished){
             var total = scores.reduce(function(a,b){return a+b;},0);
             var pos = this.x;
             context.globalAlpha = 1;
@@ -296,11 +293,9 @@ function ProgressBar(x,y,width,height){
         context.stroke();
     }
     this.tryClick = function(mouse){
-        console.log("Tried clicking");
         if(owner && countdown.length==0 && !(mouse.x<this.x || mouse.x>this.x+this.width || mouse.y<this.y || mouse.y>this.y+this.height)) this.newClick();
     }
     this.newClick = function(){
-        console.log("Clicked!");
         sendStartGame();
     }
 }
