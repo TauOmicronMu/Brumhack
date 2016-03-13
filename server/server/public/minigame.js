@@ -429,7 +429,8 @@ function resizeCanvas() {
 }
 
 console.log("Reached appending the canvas to #minigame");
-$("#minigame").append(canvas);
+//$("#minigame").append(canvas);
+canvas.appendTo("#minigame");
 console.log("Should have appended canvas to #minigame.");
 animate(step);
 
