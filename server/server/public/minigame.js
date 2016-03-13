@@ -30,7 +30,23 @@ var started = false;
 var finished = false;
 var owner = false;
 
+var results;
+var winner;
+
 //For interacting
+
+function getWinner(){
+    return winner;
+}
+
+function getFinalScores(){
+    return results;
+}
+
+function addStartEmitter(emitter){
+    emitter.bind(start());
+}
+
 
 //Gets clicks from last call of this function
 function getNewClicks(){
@@ -46,20 +62,6 @@ function addNewClicks(clicks){
     for(var i=0;i<clicks.length;i++){
         scores[i]+=clicks[i];
     }
-}
-
-function getFinalScores(){
-    
-    var sum = scores.reduce(function(a,b){return a+b;},0);
-    var res = new Array();
-    for(var i=0;i<scores.length;i++){
-        res.push({
-            cuisine: options[i],
-            score: scores[i],
-            part: scores[i]/sum
-        });
-    }
-    return res;
 }
 
 function start(){
@@ -93,8 +95,8 @@ function setOwner(){
 }
 
 function sendStartGame(){
-    //TODO
-    start();
+    startGame();
+    //start();
 }
 
 
@@ -112,6 +114,7 @@ function prepare(){
         if(i%2==0) buttons.push(new Button(width*(Math.floor(i/2))/c,0,width/c,height/2,options[i],colors[i]));
         else buttons.push(new Button(width*(Math.floor(i/2))/c,height/2,width/c,height/2,options[i],colors[i]));
     }
+    resizeCanvas();
 }
 
 function rebuildButtons(){
@@ -126,6 +129,14 @@ function rebuildButtons(){
 
 function init(){
     canvas.addEventListener("mousedown", onMouseDown, false);
+    
+    joinGame(function(cuisine){
+        incremementScore(cuisine);
+    }, function(){}, function(votes, cuisine){
+        finish();
+        results = votes;
+        winner = cuisine;
+    });
     
     //Testing
     addOption("Curry");
@@ -242,6 +253,7 @@ function Button(x,y,width,height,name,color){
         $("#log3").text(this.name+" pressed")
         this.effectSize+=0.20;
         incremementScore(this.name);
+        addPoint(this.name);
     }
     
 }
@@ -252,7 +264,6 @@ var incremementScore = function(name){
                scores[i]++;
            }
     }
-    addPoint(name); //
 }
 
 
