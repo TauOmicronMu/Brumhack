@@ -2,8 +2,8 @@
  * Created by matt on 12/03/2016.
  */
 
-//var socket = io.connect("http://ec2-54-187-69-193.us-west-2.compute.amazonaws.com/");
-var socket = io.connect("localhost");
+var socket = io.connect("http://ec2-54-187-69-193.us-west-2.compute.amazonaws.com/");
+//var socket = io.connect("localhost");
 
 socket.on('connect', function(){
   console.log('connected');
