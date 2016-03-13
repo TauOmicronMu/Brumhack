@@ -90,6 +90,16 @@ function addCuisines(options){
     prepare();
 }
 
+function establishConnection(){
+    joinGame(function(cuisine){
+        incremementScore(cuisine);
+    }, function(){}, function(votes, cuisine){
+        finish();
+        results = votes;
+        winner = cuisine;
+    });
+}
+
 function setOwner(){
     owner = true;
 }
@@ -129,15 +139,6 @@ function rebuildButtons(){
 
 function init(){
     canvas.addEventListener("mousedown", onMouseDown, false);
-    
-    joinGame(function(cuisine){
-        incremementScore(cuisine);
-    }, function(){}, function(votes, cuisine){
-        finish();
-        results = votes;
-        winner = cuisine;
-    });
-    
     //Testing
     /*addOption("Curry");
     addOption("Pizza");
