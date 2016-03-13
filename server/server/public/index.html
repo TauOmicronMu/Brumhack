@@ -3,6 +3,7 @@
     <head> 
         <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
         <script src="randomColor.js"></script>
+        <script src="roomNameGen.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
         <script src='Winwheel.js'></script>
         <link rel='stylesheet' type='text/css' href='stylesheet.css'> 
@@ -10,6 +11,20 @@
         <script src="app.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
         <script src="./sockets.js"></script>
+
+        <script> 
+            function newLobby() {
+                var name = genName();
+                createRoom(name, $("#postcodeInput").value);
+                $("#lobbycode").text("Lobby Code : " + name);
+                moveIntoView(2);    
+            }
+
+            function joinLobby() {
+            
+            }
+        
+        </script>
     </head>
     <body>
          <!-- Front page  -->
@@ -21,13 +36,13 @@
             <div id='entrysection'>
                 <div class='entryform' id='newlobby'>
                     <div display='table-cell'>Postcode : </div>
-                    <input type="text"/>
-                    <input type="submit" value="New Lobby"/>
+                    <input type="text" id='postcodeInput'/>
+                    <input type="submit" value="New Lobby" onclick='newLobby()'/>
                 </div>
                 <br><br> 
                 <div class='entryform' id='joinlobby'>
-                    <div display='table-cell'>Lobby Code : </div>
-                    <input type="text"/>
+                    <div display='table-cell'> Lobby Code : </div>
+                    <input type="text" id='lobbycodeInput' />
                     <input type="submit" value="Join Lobby"/>
                 </div>
             </div>
@@ -35,8 +50,8 @@
         <!-- Lobby page -->
          <div id='page2'>
              <div id='left'>
-                 Lobby Code : <!-- TODO : LOAD LOBBY CODE HERE --> 
-                 <br>
+                 <h1 id="lobbycode"></h1>
+                 <br><br><br>
                  <input type="submit" value="Everyone is Ready"/>
              </div>
              <div id='players'>
