@@ -12,29 +12,24 @@
     <body>
          <!-- Front page  -->
          <div id='page1'>
-             <div id='page1wrapper'>
-                 <!-- Holds the new lobby and join lobby functionality  -->
-                 <div id='entrysection'>
-                     <div id='newlobby'>
-                         <div id='newlobbylabel'>
-                         </div>
-                         <div id='newlobbyentry'>
-                         </div>
-                         <div id='newlobbybutton'>
-                         </div>
-                     </div>
-                     <div id='joinlobby'>
-                         <div id='joinlobbylabel'>
-                         </div>
-                         <div id='joinlobbyentry'>
-                         </div>
-                         <div id='joinlobbybutton'>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-         </div>
-         <!-- Lobby page -->
+             <!-- Holds the new lobby and join lobby functionality  -->
+            <div id='logo'>
+                <img src='favicon.png' height='35%' width='35%"/>
+            </div>
+            <div id='entrysection'>
+                <div class='entryform' id='newlobby'>
+                    <div display='table-cell'>Postcode : </div>
+                    <input type="text"/>
+                    <input type="submit" value="New Lobby"/>
+                </div>
+                <br><br> 
+                <div class='entryform' id='joinlobby'>
+                    <div display='table-cell'>Lobby Code : </div>
+                    <input type="text"/>
+                    <input type="submit" value="Join Lobby"/>
+                </div>
+            </div>
+        <!-- Lobby page -->
          <div id='page2'>
          </div>
          <!-- Button Pressing page  -->

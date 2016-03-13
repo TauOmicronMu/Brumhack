@@ -6,7 +6,7 @@ function moveIntoView(n) {
      */
     console.log("Attempted to move page " + n + " into view.");
     $(pages[n-1]).css("left","0px");
-    $(pages[n-1]).css("up","0px");
+    $(pages[n-1]).css("top","0px");
     $(pages[n-1]).css("height","100%");
     $(pages[n-1]).css("width","100%");
     /*
@@ -16,7 +16,7 @@ function moveIntoView(n) {
          if(!((n-1) === i)) {
              console.log("Attempted to move page " + i + " into view.");
              $(pages[i]).css("left","-500%");
-             $(pages[i]).css("up","-500%");
+             $(pages[i]).css("top","-500%");
              $(pages[i]).css("height","0px");
              $(pages[i]).css("width","0px");
          }
