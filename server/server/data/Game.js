@@ -2,16 +2,15 @@
  *
  * Created by matt on 12/03/2016.
  */
-var JE = require("./JE.js");
-module.exports = function(postcode, initialisedCb, gameEndCb){
+module.exports = function(cuisines, gameEndCb){
   var self = this;
 
-  JE.getRestaurants(postcode, function(err, res, body){
-    self.cuisines = JE.countCuisines(body.Restaurants);
-    initialisedCb(self.cuisines);
-  });
-
   self.votes = {};
+
+  for (var i = 0; i < cuisines.length; i++) {
+    self.votes[cuisines[i].name] = cuisines[i];
+    self.votes[cuisines[i].name].numVotes = 1;
+  }
 
   self.startTime = Date.now();
   self.gameLength = gameLength();
@@ -21,11 +20,13 @@ module.exports = function(postcode, initialisedCb, gameEndCb){
   setTimeout(function(){
     console.log("game ended?!?!");
     var keys = Object.keys(self.votes);
-    var arr = new Array(keys.length);
-    for (var i = 0; i < arr.length; i++)
-      arr[i] = self.votes[keys[i]];
+    var options = new Array(keys.length);
+    for (var i = 0; i < options.length; i++)
+      options[i] = self.votes[keys[i]];
 
-    gameEndCb(arr);
+    var winner = getRandomResult(cuisines);
+
+    gameEndCb(options, winner);
   }, self.gameLength);
 
   self.timeLeft = function(){
@@ -44,4 +45,20 @@ module.exports = function(postcode, initialisedCb, gameEndCb){
 function gameLength(){
   // 10-20 seconds
   return 10000 + Math.random()*10000;
+}
+
+function getRandomResult(cuisines){
+  var sum = 0;
+  for(var i = 0; i < cuisines.length; i++){
+    sum += cuisines[i].numVotes;
+  }
+
+  var position = Math.random()*sum;
+
+  var tempSum = 0;
+  for(var i = 0; i < cuisines.length; i++){
+    tempSum += cuisines[i].numVotes;
+    if(tempSum > position) return cuisines[i].name;
+  }
+  return "error";
 }

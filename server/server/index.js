@@ -30,6 +30,7 @@ io.on('connection', function(socket){
     var err;
     if(rooms[roomName]){
       socket.join(roomName);
+      socket.emit("cuisinesLoaded", rooms[socket.room].getOptions());
       console.log("Joined room: " + roomName);
     }
     /*
@@ -44,19 +45,18 @@ io.on('connection', function(socket){
 
   socket.on("joinGame", function(){
     console.log("Joining game");
-    socket.emit("cuisinesLoaded", rooms[socket.room].getOptions());
     socket.emit("votesLoaded", rooms[socket.room].getVotes());
   });
 
-  socket.on('createRoom', function(roomName){
+  socket.on('createRoom', function(roomName, postcode){
     console.log("Creating room: " + roomName);
-    rooms[roomName] = new Room(roomName, socket.broadcast.to(roomName));
+    rooms[roomName] = new Room(roomName, postcode, socket.broadcast.to(roomName));
     socket.room = roomName;
   });
 
-  socket.on('startGame', function(postcode){
-    console.log("Starting game at postcode: " + postcode);
-    rooms[socket.room].startGame(postcode);
+  socket.on('startGame', function(){
+    console.log("Starting game");
+    rooms[socket.room].startGame();
   });
 
   socket.on('addPoint', function(cuisine){

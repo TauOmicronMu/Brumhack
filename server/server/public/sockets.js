@@ -9,34 +9,29 @@ socket.on('connect', function(){
   console.log('connected');
 });
 
-function createRoom(roomName){
-  socket.emit("createRoom", roomName);
+function createRoom(roomName, postcode){
+  socket.emit("createRoom", roomName, postcode);
 }
 
-function joinRoom(roomName, joinedCb){
+function joinRoom(roomName){
   socket.emit("joinRoom", roomName);
 }
 
-function startGame(postcode, cuisinesLoadedCb){
-  socket.emit("startGame", postcode);
-  socket.on('cuisinesLoaded', function(cuisines){
-    cuisinesLoadedCb(cuisines);
-    socket.off("cuisinesLoaded");
-  });
+function startGame(){
+  socket.emit("startGame");
 }
 
-function joinGame(cuisinesLoadedCb, votesLoadedCb, gameEndedCb){
+function joinGame(newPointCb, votesLoadedCb, gameEndedCb){
   socket.emit("joinGame");
-  socket.on("cuisinesLoaded", function(cuisines){
-    socket.off("cuisinesLoaded");
-    cuisinesLoadedCb(cuisines);
+  socket.on("newPoint", function(cuisine){
+    newPointCb(cuisine)
   });
   socket.on("votesLoaded", function(votes){
     socket.off("votesLoaded");
     votesLoadedCb(votes);
   });
-  socket.on("gameEnded", function(votes){
-    gameEndedCb(votes);
+  socket.on("gameEnded", function(votes, cuisine){
+    gameEndedCb(votes, cuisine);
     socket.off("gameEnded");
   });
 }
