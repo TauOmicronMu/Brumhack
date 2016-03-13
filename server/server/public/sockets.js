@@ -24,7 +24,7 @@ function startGame(){
 function joinGame(newPointCb, votesLoadedCb, gameEndedCb){
   socket.emit("joinGame");
   socket.on("newPoint", function(cuisine){
-    newPointCb(cuisine)
+    newPointCb(cuisine);
   });
   socket.on("votesLoaded", function(votes){
     socket.off("votesLoaded");
