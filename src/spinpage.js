@@ -16,6 +16,8 @@ function alertFinished() {
     alert(wheel.getIndicatedSegment().text + " wins!");
 }
 
+var data = getFinalScores();
+
 var wheel = new Winwheel({
         'numSegments' : segments,
         'pointerAngle' : 0, 

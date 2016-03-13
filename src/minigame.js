@@ -48,6 +48,20 @@ function addNewClicks(clicks){
     }
 }
 
+function getFinalScores(){
+    
+    var sum = scores.reduce(function(a,b){return a+b;},0);
+    var res = new Array();
+    for(var i=0;i<scores.length;i++){
+        res.push({
+            cuisine: options[i],
+            score: scores[i],
+            part: scores[i]/sum
+        });
+    }
+    return res;
+}
+
 function start(){
     setTimeout(function(){started=true;}, 3000);
     startTime = now+3000;
@@ -399,7 +413,6 @@ window.addEventListener('resize', resizeCanvas, false);
 function resizeCanvas() {
     canvas.width = $(document).width();
     canvas.height = $(document).height();
-    //console.log($(document).width()+" -- "+$(document).height());
 }
 
 $("#minigame").append(canvas);
