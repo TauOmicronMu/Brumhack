@@ -18,6 +18,8 @@
                 createRoom(name, $("#postcodeInput").val());
                 joinRoom(name, function callback() {
                     moveIntoView(3);
+                    $.getScript("minigame.js", function(){});
+                    start(); 
                 });
                 $("#lobbycode").text("Lobby Code : " + name);
                 moveIntoView(2);    
@@ -27,11 +29,17 @@
                  console.log($("#lobbycodeInput").val());
                  joinRoom($("#lobbycodeInput").val(), function callback() {
                      moveIntoView(3);
+                     $.getScript("minigame.js", function(){});
+                     start();
                  });
                  $("#lobbycode").text("Lobby Code : " + $("#lobbycodeInput").val());
                  moveIntoView(2);            
             }
-        
+             
+            function everyoneReady() {
+                startGame();
+            }
+ 
         </script>
     </head>
     <body>
@@ -60,7 +68,7 @@
              <div id='left'>
                  <h1 id="lobbycode"></h1>
                  <br><br><br>
-                 <input type="submit" value="Everyone is Ready"/>
+                 <input type="submit" value="Everyone is Ready" onclick="everyoneReady()"/>
              </div>
              <div id='players'>
                  <!-- TODO : Display list of connected clients in the lobby. -->
@@ -68,8 +76,7 @@
          </div>
          <!-- Button Pressing page  -->
          <div id='page3'>
-             <div id='minigame'> 
-                 <script src='minigame.js'></script>
+             <div id='minigame'>
              </div>
          </div>
          <!-- Spinny page  -->
