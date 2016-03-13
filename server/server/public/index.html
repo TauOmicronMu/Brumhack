@@ -17,6 +17,7 @@
                 var name = genName();
                 createRoom(name, $("#postcodeInput").val());
                 joinRoom(name, function callback() {
+                    console.log("CALLBACK");
                     moveIntoView(3);
                     start(); 
                  }, function(cuisines) { 
@@ -28,6 +29,7 @@
             function joinLobby() {
                  console.log($("#lobbycodeInput").val());
                  joinRoom($("#lobbycodeInput").val(), function callback() {
+                     console.log("CALLBACK");
                      moveIntoView(3);
                      start();
                  }, function(cuisines) {
