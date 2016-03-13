@@ -11,6 +11,7 @@
         <script src="app.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
         <script src="./sockets.js"></script>
+        <script src="minigame.js"></script>
 
         <script> 
             function newLobby() {
@@ -23,6 +24,7 @@
                  }, function(cuisines) { 
                    addCuisines(cuisines);});
                 $("#lobbycode").text("Lobby Code : " + name);
+                establishConnection();
                 moveIntoView(2);    
             }
 
@@ -35,6 +37,7 @@
                  }, function(cuisines) {
                     addCuisines(cuisines);});
                  $("#lobbycode").text("Lobby Code : " + $("#lobbycodeInput").val());
+                 establishConnection();
                  moveIntoView(2);            
             }
              
@@ -79,7 +82,6 @@
          <!-- Button Pressing page  -->
          <div id='page3'>
              <div id='minigame'>
-                 <script src="minigame.js"></script>
              </div>
          </div>
          <!-- Spinny page  -->
