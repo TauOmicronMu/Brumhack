@@ -30,7 +30,8 @@ io.on('connection', function(socket){
     var err;
     if(rooms[roomName]){
       socket.join(roomName);
-      socket.emit("cuisinesLoaded", rooms[socket.room].getOptions());
+      console.log(socket.room);
+      socket.emit("cuisinesLoaded", rooms[roomName].getOptions());
       console.log("Joined room: " + roomName);
     }
     /*
