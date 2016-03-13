@@ -21,7 +21,7 @@
                     console.log("CALLBACK");
                     moveIntoView(3);
                     start(); 
-                 }, function(cuisines) { console.log(cuisines); 
+                 }, function(cuisines) { 
                    addCuisines(cuisines);});
                 $("#lobbycode").text("Lobby Code : " + name);
                 establishConnection();
@@ -34,7 +34,7 @@
                      console.log("CALLBACK");
                      moveIntoView(3);
                      start();
-                 }, function(cuisines) { console.log(cuisines);
+                 }, function(cuisines) {
                     addCuisines(cuisines);});
                  $("#lobbycode").text("Lobby Code : " + $("#lobbycodeInput").val());
                  establishConnection();
