@@ -1,0 +1,6 @@
+addOption(name) to add a new option
+prepare() call after adding all options - it renders buttons
+start() - allows presses, call when all players are connectedv
+
+getNewClicks() - returns an array of new clicks since last call of this function
+addNewClicks(clicks) - tell this class about new clicks
