@@ -426,6 +426,7 @@ window.addEventListener('resize', resizeCanvas, false);
 function resizeCanvas() {
     canvas.width = document.width;
     canvas.height = document.height;
+    update();
 }
 
 console.log("Reached appending the canvas to #minigame");
