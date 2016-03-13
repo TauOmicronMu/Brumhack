@@ -16,12 +16,19 @@
             function newLobby() {
                 var name = genName();
                 createRoom(name, $("#postcodeInput").value);
+                joinRoom(name, function callback() {
+                    moveIntoView(3);
+                });
                 $("#lobbycode").text("Lobby Code : " + name);
                 moveIntoView(2);    
             }
 
             function joinLobby() {
-            
+                 joinRoom($("#lobbycodeInput").value, function callback() {
+                     moveIntoView(3);
+                 });
+                 $("#lobbycode").text("Lobby Code : " + $("#lobbycodeInput").value);
+                 moveIntoView(2);            
             }
         
         </script>
