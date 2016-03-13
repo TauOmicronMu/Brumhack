@@ -18,7 +18,7 @@ function alertFinished() {
     alert(wheel.getIndicatedSegment().text + " wins!");
 }
 
-function setProperties(){
+function endGame(){
     var data = getFinalScores();
     var sum=data.map(function(a) {return a.numVotes;}).reduce(function(a,b){return a+b;},0);
     result = getWinner();
@@ -31,6 +31,15 @@ function setProperties(){
             'size' : data[i-1].numVotes*360/sum
         };
     }
+    var angle = 0;
+    var i=0;
+    while(data[i].name!=result){
+        angle+=segments[i+1].size;
+        i++;
+    }
+    angle+=segments[i+1].size*Math.random();
+    wheel.animation.stopAngle = angle;
+    wheel.startAnimation();
 }
 
 

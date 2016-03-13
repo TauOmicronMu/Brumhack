@@ -2,15 +2,16 @@
 <html>
     <head> 
         <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
+         <script src="https://code.jquery.com/jquery-1.12.1.js" integrity="sha256-VuhDpmsr9xiKwvTIHfYWCIQ84US9WqZsLfR4P7qF6O8=" crossorigin="anonymous"></script>
         <script src="randomColor.js"></script>
         <script src="roomNameGen.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
         <script src='Winwheel.js'></script>
         <link rel='stylesheet' type='text/css' href='stylesheet.css'> 
-        <script src="https://code.jquery.com/jquery-1.12.1.js" integrity="sha256-VuhDpmsr9xiKwvTIHfYWCIQ84US9WqZsLfR4P7qF6O8=" crossorigin="anonymous"></script>
         <script src="app.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
         <script src="./sockets.js"></script>
+        <script src="minigame.js"></script>
 
         <script> 
             function newLobby() {
@@ -20,9 +21,10 @@
                     console.log("CALLBACK");
                     moveIntoView(3);
                     start(); 
-                 }, function(cuisines) { 
+                 }, function(cuisines) { console.log(cuisines); 
                    addCuisines(cuisines);});
                 $("#lobbycode").text("Lobby Code : " + name);
+                establishConnection();
                 moveIntoView(2);    
             }
 
@@ -32,9 +34,10 @@
                      console.log("CALLBACK");
                      moveIntoView(3);
                      start();
-                 }, function(cuisines) {
+                 }, function(cuisines) { console.log(cuisines);
                     addCuisines(cuisines);});
                  $("#lobbycode").text("Lobby Code : " + $("#lobbycodeInput").val());
+                 establishConnection();
                  moveIntoView(2);            
             }
              
@@ -79,7 +82,6 @@
          <!-- Button Pressing page  -->
          <div id='page3'>
              <div id='minigame'>
-                 <script src="minigame.js"></script>
              </div>
          </div>
          <!-- Spinny page  -->
